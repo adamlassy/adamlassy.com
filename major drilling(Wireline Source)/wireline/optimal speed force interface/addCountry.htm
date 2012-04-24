@@ -1,0 +1,45 @@
+<html>
+
+<BODY BACKGROUND="./headerback.gif" BGCOLOR="#ffffff" MARGINWIDTH="0" MARGINHEIGHT="0" TOPMARGIN="0" LEFTMARGIN="0" TEXT="#FFFFFF">
+<!-- <body BGCOLOR="#ffffff" MARGINWIDTH="0" MARGINHEIGHT="0" TOPMARGIN="0" LEFTMARGIN="0" TEXT="#FFFFFF"> -->
+
+<!--
+<TABLE WIDTH="100%" HEIGHT="70" BACKGROUND="headerback.gif" CELLSPACING="0" CELLPADDING="0" BORDER="0">
+	<TR><TD ALIGN="left"><IMG SRC="header2.jpg" WIDTH="760" HEIGHT="134" BORDER="0" ALT="Major Drilling Group International Inc."></TD></TR>
+</TABLE>
+-->
+<TABLE WIDTH="100%" HEIGHT="1" BGCOLOR="#ffffff" CELLSPACING="0" CELLPADDING="0" BORDER="0">
+	<TR><TD ALIGN="left"><IMG SRC="spacer.gif" WIDTH="760" HEIGHT="1" BORDER="0" ALT=""></TD></TR>
+</TABLE>
+
+
+<script type="text/javascript" language="javascript">
+
+	function transferResultsToParent(){
+		opener.saveNewCountry(document.getElementById('newCountry').value);
+		window.close();
+	}
+
+</script>
+
+<form>
+	<table align="center">
+		<tr>
+			<td>
+				New Country Name:
+			</td>
+			<td align="right">
+				<input type="text" id="newCountry">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right">
+				</br>
+				<button onclick="transferResultsToParent();" > Submit </button>
+			</td>	
+		</tr>
+	</table>
+</form>					
+</body>
+
+</html>

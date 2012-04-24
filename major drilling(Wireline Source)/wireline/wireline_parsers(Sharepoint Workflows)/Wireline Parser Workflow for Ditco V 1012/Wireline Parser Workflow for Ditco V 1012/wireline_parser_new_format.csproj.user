@@ -1,0 +1,18 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{F8810EC1-6754-47FC-A15F-DFABD2E3FA90}">
+        <DisplayName>wireline_parser_new_format</DisplayName>
+        <SiteURL>http://bsisisecure01/</SiteURL>
+        <ListURL>http://bsisisecure01/Documents/Forms/AllItems.aspx</ListURL>
+        <TargetList Id="{5f4f3e26-d634-4779-8a2f-4f58da7110b5}">Documents</TargetList>
+        <HistoryList Id="{e5511f53-986b-40e8-b3b5-695b3ceeb197}">Workflow History</HistoryList>
+        <TaskList Id="{d77d4b4d-455d-49a8-a531-fb0481501400}">Tasks</TaskList>
+        <AutoAssociate>true</AutoAssociate>
+        <ManualStart>true</ManualStart>
+        <StartOnCreate>true</StartOnCreate>
+        <StartOnChange>false</StartOnChange>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
