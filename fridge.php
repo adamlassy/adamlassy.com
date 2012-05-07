@@ -3,7 +3,7 @@
 if ($_GET["action"] == "set")
 {
 
-$myFile = "testFile.txt";
+$myFile = "/tmp/testFile.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $stringData = $_GET["val"];
 fwrite($fh, $stringData);
@@ -18,7 +18,7 @@ else
 
 $weight = 0;
 
-$handle = fopen("testFile.txt", "r");
+$handle = fopen("/tmp/testFile.txt", "r");
 if ($buf = fgets($handle, 4096)) {
   $weight = $buf;
 }
