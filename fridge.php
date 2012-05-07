@@ -1,12 +1,31 @@
 <?php
 
-if ($_GET["w"])
+if ($_GET["action"] == "set")
 {
-	$arr = array('status' => 0);
+
+$myFile = "testFile.txt";
+$fh = fopen($myFile, 'w') or die("can't open file");
+$stringData = $_GET["val"];
+fwrite($fh, $stringData);
+fclose($fh);
+
+$arr = array('status' => 'ok');
+echo json_encode($arr);
+
 }
 else
 {
-	$arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+
+$weight = 0;
+
+$handle = fopen("testFile.txt", "r");
+if ($buf = fgets($handle, 4096)) {
+  $weight = $buf;
 }
-echo json_encode($arr);
+fclose($handle);
+
+  $arr = array('weight' => $weight);
+  echo json_encode($arr);
+}
+
 ?>
