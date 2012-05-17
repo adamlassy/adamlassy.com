@@ -55,6 +55,7 @@ switch ($_GET['action'])
     }
 
     write_upc($_GET["val"]);
+    echo "Write UPC.";
     break;
 
   default:
@@ -81,7 +82,7 @@ function write_milk($weight)
 function write_upc($upc)
 {
     $myFile = "/tmp/upc.txt";
-    $fh = fopen($myFile, 'a') or die("can't open file");
+    $fh = fopen($myFile, 'w') or die("can't open file");
     $stringData = $upc;
     fwrite($fh, $stringData);
     fwrite($fh, "\n");
