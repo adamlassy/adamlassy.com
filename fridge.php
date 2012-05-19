@@ -2,7 +2,7 @@
 
 require_once 'xmlrpc/lib/xmlrpc.inc';
 $rpc_key = 'c0701883da4d00b2d48723c8fa54d51008b32132';  // Set your rpc_key here
-
+$json_key = '5cd62861daf5efb419c545116b0f6b31';
 
 switch ($_GET['action'])
 {
@@ -20,7 +20,22 @@ switch ($_GET['action'])
     //$arr = array('status' => 'ok');
     //echo json_encode($arr);
 
-    $server = new xmlrpc_client('/xmlrpc', 'www.upcdatabase.com');
+$json_url = "http://www.upcdatabase.org/api/json/" . $json_key . "/" . $_GET['val'];
+//$json_url = 'http://www.mydomain.com/json_script.json';
+ 
+// Initializing curl
+$ch = curl_init();
+
+// Configuring curl options
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//curl_setopt($ch, CURLOPT_HTTPHEADER, 'Content-type: application/json');
+curl_setopt($ch, CURLOPT_URL, $json_url);
+
+// Getting results
+$result =  curl_exec($ch); // Getting jSON result string
+
+/*
+    $server = new xmlrpc_client('/xmlrpc', 'www.upcdatabase.org');
 
     $message = new xmlrpcmsg('lookup',
                 array( new xmlrpcval( array(
@@ -29,6 +44,7 @@ switch ($_GET['action'])
                 ), 'struct'))
     );
     $resp = $server->send($message);
+
 
     //If there was a problem sending the message, the resp will be false
     if (!$resp)
@@ -53,9 +69,21 @@ switch ($_GET['action'])
                 echo 'Fault Code: ' . $resp->faultCode() . "\n";
                 echo 'Fault Reason: ' . $resp->faultString() . "\n";
     }
+*/
 
-    write_upc($_GET["val"]);
-    echo "Write UPC.";
+    $result = json_decode($result, true);
+
+    if ($result['valid'] == true)
+    {
+	echo $result['itemname'];
+        write_upc($result['itemname'] . " - " . $result['description']);
+    }
+    else
+    {
+	echo "Can't find UPC";
+    }
+    print_r($result);
+
     break;
 
   default:
@@ -82,7 +110,7 @@ function write_milk($weight)
 function write_upc($upc)
 {
     $myFile = "/tmp/upc.txt";
-    $fh = fopen($myFile, 'w') or die("can't open file");
+    $fh = fopen($myFile, 'a') or die("can't open file");
     $stringData = $upc;
     fwrite($fh, $stringData);
     fwrite($fh, "\n");
