@@ -73,7 +73,7 @@ function write_upc($upc,$sProduct,$sDesc)
 {
     $sdb = new AmazonSDB();
 
-    $method = "Add";
+    $method = $_GET['in'];
 
     sdb_fridge_add_history($sdb, $upc, $sProduct, $sDesc, $method);
     sdb_fridge_add_item($sdb, $upc, $sProduct, $sDesc, $method);
