@@ -69,9 +69,23 @@ function sdb_fridge_get_milk($_sdb)
 		$raw_weight =  $items[0]->Attribute[0]->Value;
         }
 
-        if ($raw_weight > 50)
+        if ($raw_weight > 875)
 	{
-	  $weight = $raw_weight/10 . "%";
+	  $weight = "Full";
+	} else if ($raw_weight > 850) {
+	  $weight = "88.5%";
+	} else if ($raw_weight > 820) {
+	  $weight = "75%";
+	} else if ($raw_weight > 785) {
+	  $weight = "62.5%";
+	} else if ($raw_weight > 745) {
+	  $weight = "50%";
+	} else if ($raw_weight > 675) {
+	  $weight = "38.5%";
+	} else if ($raw_weight > 525) {
+	  $weight = "25%";
+	} else if ($raw_weight > 300) {
+	  $weight = "Almost Empty";
 	} else {
 	  $weight = "<i>Removed</i>";
 	}
