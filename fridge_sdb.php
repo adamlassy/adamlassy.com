@@ -24,6 +24,20 @@ function sdb_fridge_create_domain($_sdb,$sDomain)
 	return $new_domain->isOK();
 }
 
+function sdb_fridge_set_milk($_sdb,$weight)
+{
+	$domain = "undercurrent.fridge.milk";
+
+	$_sdb->delete_attributes($domain, "milk");
+		
+        $add_attributes = $_sdb->batch_put_attributes($domain, array(
+				"milk" => array(
+				'weight' => $weight
+				)	
+			)
+		);
+}
+
 function sdb_fridge_add_history($_sdb,$sUpc,$sName,$sDesc,$sAction)
 {
 
@@ -39,6 +53,21 @@ function sdb_fridge_add_history($_sdb,$sUpc,$sName,$sDesc,$sAction)
 			)	
 		)
 	);
+}
+
+function sdb_fridge_get_milk($_sdb)
+{
+	$weight = 0;
+
+	$results = $_sdb->select("SELECT weight FROM `{$domain}` WHERE ItemName()='milk'");
+	$items = $results->body->Item();
+        if ($items[0])
+        {
+       		$weight = (int) $items[0]->Attribute[0]->Value;
+
+	}
+
+	return $weight;
 }
 
 function sdb_fridge_add_item($_sdb,$sUpc,$sName,$sDesc,$sAction)
@@ -98,15 +127,10 @@ function sdb_fridge_get_items($_sdb)
 
 	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.history');
 	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.item');
-
-	sdb_fridge_add_history($sdb,"1234","Tic Tacs", "", "Add");
-
-        sdb_fridge_add_item($sdb,"1234","Tic Tacs", "", "Add");
+	sdb_fridge_create_domain($sdb,'undercurrent.fridge.milk');
 
 	$items = sdb_fridge_get_items($sdb);
         //$items = sdb_fridge_get_history($sdb);
-
-echo "GOT ITEMS";
 
 	// Re-structure the data so access is easier (see helper function below)
 	$data = reorganize_data($items);

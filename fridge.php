@@ -64,11 +64,9 @@ switch ($_GET['action'])
 
 function write_milk($weight)
 {
-    $myFile = "/tmp/weight.txt";
-    $fh = fopen($myFile, 'w') or die("can't open file");
-    $stringData = $weight;
-    fwrite($fh, $stringData);
-    fclose($fh);
+    $sdb = new AmazonSDB();
+
+    sdb_fridge_set_milk($sdb,$weight);
 }
 
 function write_upc($upc,$sProduct,$sDesc)
