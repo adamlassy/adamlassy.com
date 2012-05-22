@@ -57,16 +57,24 @@ function sdb_fridge_add_history($_sdb,$sUpc,$sName,$sDesc,$sAction)
 
 function sdb_fridge_get_milk($_sdb)
 {
-	$weight = 0;
+	$raw_weight = 0;
+
+	$domain = "undercurrent.fridge.milk";
 
 	$results = $_sdb->select("SELECT weight FROM `{$domain}` WHERE ItemName()='milk'");
 	$items = $results->body->Item();
+
         if ($items[0])
         {
-       		$weight = (int) $items[0]->Attribute[0]->Value;
+		$raw_weight =  $items[0]->Attribute[0]->Value;
+        }
 
+        if ($raw_weight > 50)
+	{
+	  $weight = $raw_weight/10 . "%";
+	} else {
+	  $weight = "<i>Removed</i>";
 	}
-
 	return $weight;
 }
 
@@ -253,6 +261,11 @@ function display_html($html)
                         background-color: #fff;
                         color: #333;
                 }
+		.milk {
+
+                        color: #333;
+                        font: 38px/1.5em "Helvetica Neue", "Lucida Grande", Verdana, Arial, sans;
+		}
                 table {
                         margin: 50px auto 0 auto;
                         padding: 0;

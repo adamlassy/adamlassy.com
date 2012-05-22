@@ -55,8 +55,11 @@ switch ($_GET['action'])
     $data = reorganize_data($items);
 
     // Generate <table> HTML from the data (see helper function below)
-    $html = generate_html_table($data);
+    $item_html = generate_html_table($data);
 
+    $milk = sdb_fridge_get_milk($sdb);
+
+    $html = "<center><span class='milk'><b>Milk: ${milk}</b></span></center><br><br></center>" . $item_html;
     display_html($html);
 
     break;
