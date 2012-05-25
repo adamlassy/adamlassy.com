@@ -24,6 +24,20 @@ function sdb_fridge_create_domain($_sdb,$sDomain)
 	return $new_domain->isOK();
 }
 
+function sdb_fridge_set_lock($_sdb,$val)
+{
+	$domain = "undercurrent.fridge.lock";
+
+	$_sdb->delete_attributes($domain, "lock");
+		
+        $add_attributes = $_sdb->batch_put_attributes($domain, array(
+				"lock" => array(
+					'open' => $val
+				)	
+			)
+		);
+}
+
 function sdb_fridge_set_milk($_sdb,$weight)
 {
 	$domain = "undercurrent.fridge.milk";
@@ -53,6 +67,21 @@ function sdb_fridge_add_history($_sdb,$sUpc,$sName,$sDesc,$sAction)
 			)	
 		)
 	);
+}
+
+function sdb_fridge_get_lock($_sdb)
+{
+	$domain = "undercurrent.fridge.lock";
+
+	$results = $_sdb->select("SELECT open FROM `{$domain}` WHERE ItemName()='lock'");
+	$items = $results->body->Item();
+
+        if ($items[0])
+        {
+		$open =  $items[0]->Attribute[0]->Value;
+        }
+
+	return $open;
 }
 
 function sdb_fridge_get_milk($_sdb)
@@ -141,6 +170,10 @@ function sdb_fridge_get_items($_sdb)
 	return $results->body->Item();
 }
 
+
+	$sdb = new AmazonSDB();
+
+	sdb_fridge_create_domain($sdb,'undercurrent.fridge.lock');
 
 /*
 // ADD DATA TO SIMPLEDB
