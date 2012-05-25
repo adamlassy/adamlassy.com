@@ -13,7 +13,6 @@ switch ($_GET['action'])
 
     write_lock($_GET["val"]);
 
-   echo "SET LOCK STATUS: " .  $_GET["val"];
     $arr = array('status' => 'lock' . $_GET["val"]);
     echo json_encode($arr);
     break;
@@ -24,7 +23,6 @@ switch ($_GET['action'])
 
     $lock_status = sdb_fridge_get_lock($sdb);
 
-echo "GET LOCK STATUS: "   . $lock_status;
 
     $arr = array('status' => 'lock' . $lock_status);
     echo json_encode($arr);
