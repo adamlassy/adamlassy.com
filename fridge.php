@@ -13,7 +13,7 @@ switch ($_GET['action'])
 
     write_milk($_GET["val"]);
 
-    $arr = array('status' => 'ok');
+    $arr = array('status' => 'lock0');
     echo json_encode($arr);
     break;
 
