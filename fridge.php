@@ -19,15 +19,12 @@ switch ($_GET['action'])
 
   case "milk":
 
-    $r = rand(0,12);
-    //sleep($r);
     write_milk($_GET["val"]);
 
     $lock_status = sdb_fridge_get_lock($sdb);
 
 
-    $arr = array('status' => $r);
-    //$arr = array('status' => 'lock' . $lock_status);
+    $arr = array('status' => 'lock' . $lock_status);
     echo json_encode($arr);
     break;
 
