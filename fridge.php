@@ -19,7 +19,7 @@ switch ($_GET['action'])
 
   case "milk":
 
-    sleep(8);
+    sleep(rand(0,12));
     write_milk($_GET["val"]);
 
     $lock_status = sdb_fridge_get_lock($sdb);
