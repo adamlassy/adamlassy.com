@@ -11,7 +11,7 @@ switch ($_GET['action'])
 
   case "lock":
 
-    sleep(5);
+    sleep(10);
     write_lock($_GET["val"]);
 
     $arr = array('status' => 'lock' . $_GET["val"]);
