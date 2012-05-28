@@ -26,7 +26,7 @@ switch ($_GET['action'])
     $lock_status = sdb_fridge_get_lock($sdb);
 
 
-    $arr = array('status' => r);
+    $arr = array('status' => $r);
     //$arr = array('status' => 'lock' . $lock_status);
     echo json_encode($arr);
     break;
