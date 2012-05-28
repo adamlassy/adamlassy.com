@@ -11,7 +11,6 @@ switch ($_GET['action'])
 
   case "lock":
 
-    sleep(10);
     write_lock($_GET["val"]);
 
     $arr = array('status' => 'lock' . $_GET["val"]);
@@ -20,6 +19,7 @@ switch ($_GET['action'])
 
   case "milk":
 
+    sleep(8);
     write_milk($_GET["val"]);
 
     $lock_status = sdb_fridge_get_lock($sdb);
