@@ -145,7 +145,7 @@ echo "this upc : ";
 echo $sUpc;
 	if ($count > 0)
 		$add_attributes = $_sdb->batch_put_attributes($domain, array(
-			"UPC:" . $sUpc => array(
+			$sUpc => array(
 				'name' => $sName . " " . $sDesc,
 				'count' => $count
 				)	
@@ -173,7 +173,7 @@ function sdb_fridge_get_items($_sdb)
 }
 
 
-	$sdb = new AmazonSDB();
+	//$sdb = new AmazonSDB();
 
 	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.item');
 
