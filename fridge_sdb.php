@@ -140,11 +140,13 @@ function sdb_fridge_add_item($_sdb,$sUpc,$sName,$sDesc,$sAction)
 	if ($sAction == '1') $count++;
 	else $count--;
 
+
+echo "this upc : ";
+echo $sUpc;
 	if ($count > 0)
 		$add_attributes = $_sdb->batch_put_attributes($domain, array(
-				$sUpc => array(
-				'name' => $sName,
-				'description' => $sDesc,
+			"UPC:" . $sUpc => array(
+				'name' => $sName . " " . $sDesc,
 				'count' => $count
 				)	
 			)
@@ -173,7 +175,7 @@ function sdb_fridge_get_items($_sdb)
 
 	$sdb = new AmazonSDB();
 
-	sdb_fridge_create_domain($sdb,'undercurrent.fridge.lock');
+	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.item');
 
 /*
 // ADD DATA TO SIMPLEDB

@@ -45,15 +45,13 @@ switch ($_GET['action'])
 
     $result = json_decode($result, true);
 
-    //if ($result['valid'] == true)
-    //{
-      echo $result['itemname'];
-      write_upc($_GET['val'], $result['itemname'], $result['description']);
-    //}
-    //else
-    //{
-    // echo "Can't find UPC";
-    //}
+    $name = "";
+    if ($result['valid'] == true)
+    {
+      $name = $result['itemname'] . " " . $result['description'];
+    }
+    echo $_GET['val'];
+    write_upc($_GET['val'], $name, "");
 
     break;
 
