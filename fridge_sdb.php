@@ -137,7 +137,7 @@ function sdb_fridge_add_item($_sdb,$sUpc,$sName,$sDesc,$sAction)
 		$_sdb->delete_attributes($domain, $sUpc);
 	}
 
-	if ($sAction == '1') $count++;
+	if ($sAction == '2') $count++;
 	else $count--;
 
 
