@@ -21,8 +21,8 @@ switch ($_GET['action'])
 
     write_milk($_GET["val"]);
 
+    $sdb = new AmazonSDB();
     $lock_status = sdb_fridge_get_lock($sdb);
-
 
     $arr = array('status' => 'lock' . $lock_status);
     echo json_encode($arr);
