@@ -67,8 +67,21 @@ switch ($_GET['action'])
     $item_html = generate_html_table($data);
 
     $milk = sdb_fridge_get_milk($sdb);
+    
+    $lock = sdb_fridge_get_lock($sdb);
 
-    $html = "<center><span class='milk'><b>Milk: ${milk}</b></span></center><br><br></center>" . $item_html;
+    if ($lock == 0)
+    {
+      $lock_text = "Unlocked";
+      $lock_link = "<a href='fridge.php?action=lock&val=1'>lock fridge</a>";
+    }
+    else
+    {
+      $lock_text = "Locked";
+      $lock_link = "<a href='fridge.php?action=lock&val=0'>unlock fridge</a>";
+    }
+
+    $html = "<center><span class='milk'><b>Fridge is: <i>${lock_text}</i></b></span><br>${lock_link}<br><br><span class='milk'><b>Milk: ${milk}</b></span></center><br><br></center>" . $item_html;
     display_html($html);
 
     break;

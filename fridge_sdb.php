@@ -313,7 +313,7 @@ function display_html($html)
 		.milk {
 
                         color: #333;
-                        font: 38px/1.5em "Helvetica Neue", "Lucida Grande", Verdana, Arial, sans;
+                        font: 25px/1.5em "Helvetica Neue", "Lucida Grande", Verdana, Arial, sans;
 		}
                 table {
                         margin: 50px auto 0 auto;
