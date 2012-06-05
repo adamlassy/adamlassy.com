@@ -123,34 +123,28 @@ function sdb_fridge_get_milk($_sdb)
 
 function sdb_fridge_add_item($_sdb,$sUpc,$sName,$sDesc,$sAction)
 {
-
 	$domain = "undercurrent.fridge.item";
 
-        $count = 0;
-
-	$results = $_sdb->select("SELECT count FROM `{$domain}` WHERE ItemName()='{$sUpc}'");
-	$items = $results->body->Item();
-        if ($items[0])
+	if ($sAction == '2')
         {
-       		$count = (int) $items[0]->Attribute[0]->Value;
-
-		$_sdb->delete_attributes($domain, $sUpc);
-	}
-
-	if ($sAction == '2') $count++;
-	else $count--;
-
-
-echo "this upc : ";
-echo $sUpc;
-	if ($count > 0)
 		$add_attributes = $_sdb->batch_put_attributes($domain, array(
 			$sUpc => array(
 				'name' => $sName . " " . $sDesc,
-				'count' => $count
+				'count' => $count,
+                                'date' => date(DATE_RFC822)
 				)	
 			)
 		);
+        } else {
+
+           $results = $_sdb->select("SELECT date FROM `{$domain}` WHERE ItemName()='{$sUpc}'");
+           $items = $results->body->Item();
+
+           $att = $items[0]->Attribute[0];
+           $attributes = Array('Name' => $att->Name, 'Value' => $att->Value);
+
+	   $_sdb->delete_attributes($domain, $sUpc, $attributes);
+        }
 }
 
 function sdb_fridge_get_history($_sdb)
@@ -168,33 +162,23 @@ function sdb_fridge_get_items($_sdb)
 	$domain = "undercurrent.fridge.item";
 
 	$results = $_sdb->select("SELECT * FROM `{$domain}`");
-	
-	return $results->body->Item();
+
+	$items = $results->body->Item();
+
+/*
+        for ($i=0; $i<count($items); $i++)
+        {
+          $count = count($items[$i]->Attribute[3]);
+          $items[$i]->Attribute[1].Value = $count;
+        }
+*/
+        return $items;
 }
 
 
 	//$sdb = new AmazonSDB();
-
+        //$sdb->delete_domain('undercurrent.fridge.item');
 	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.item');
-
-/*
-// ADD DATA TO SIMPLEDB
-	// Instantiate the AmazonSDB class
-	$sdb = new AmazonSDB();
-
-	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.history');
-	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.item');
-	sdb_fridge_create_domain($sdb,'undercurrent.fridge.milk');
-
-	$items = sdb_fridge_get_items($sdb);
-        //$items = sdb_fridge_get_history($sdb);
-
-	// Re-structure the data so access is easier (see helper function below)
-	$data = reorganize_data($items);
-
-	// Generate <table> HTML from the data (see helper function below)
-	$html = generate_html_table($data);
-*/
 
 /*%******************************************************************************************%*/
 // HELPER FUNCTIONS
@@ -246,6 +230,19 @@ function sdb_fridge_get_items($_sdb)
 		);
 	}
 
+        function sum_item_count(&$data)
+        {
+
+	   $rows = $data['rows'];
+
+           for($i=0; $i<count($rows); $i++)
+           {
+
+             $rows[$i]['count'][0] = count($rows[$i]['date']);
+           }
+	   $data['rows'] = $rows;
+        }
+
 	function generate_html_table($data)
 	{
 		// Retrieve row/column data
@@ -280,9 +277,10 @@ function sdb_fridge_get_items($_sdb)
 			foreach ($columns as $column)
 			{
 				// If we have a value, concatenate the values into a string. Otherwise, nothing.
+                                $index = count($row[$column]) - 1;
+				//$output .= '<td>' . (isset($row[$column]) ? $row[$column][$index] : '') . '</td>';
 				$output .= '<td>' . (isset($row[$column]) ? implode(', ', $row[$column]) : '') . '</td>';
 			}
-
 			$output .= '</tr>' . PHP_EOL;
 		}
 
@@ -341,3 +339,4 @@ function display_html($html)
 <?php
 }
 ?>
+

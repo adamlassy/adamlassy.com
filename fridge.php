@@ -1,6 +1,6 @@
 <?php
 
-require_once 'xmlrpc/lib/xmlrpc.inc';
+//require_once 'xmlrpc/lib/xmlrpc.inc';
 require_once 'fridge_sdb.php';
 
 $rpc_key = 'c0701883da4d00b2d48723c8fa54d51008b32132';  // Set your rpc_key here
@@ -50,7 +50,6 @@ switch ($_GET['action'])
     {
       $name = $result['itemname'] . " " . $result['description'];
     }
-    echo $_GET['val'];
     write_upc($_GET['val'], $name, "");
 
     break;
@@ -62,6 +61,9 @@ switch ($_GET['action'])
 
     // Re-structure the data so access is easier (see helper function below)
     $data = reorganize_data($items);
+
+    //Sum up the item count
+    sum_item_count($data);
 
     // Generate <table> HTML from the data (see helper function below)
     $item_html = generate_html_table($data);
@@ -113,5 +115,4 @@ function write_upc($upc,$sProduct,$sDesc)
 }
 
 ?>
-
 
