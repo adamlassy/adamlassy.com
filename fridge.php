@@ -96,11 +96,11 @@ switch ($_GET['action'])
     {
       if ($calories_out > $calories_goal)
       {
-        $lock = "1";
+        $lock = "0";
       }
       else
       {
-        $lock = "0";
+        $lock = "1";
       }
       write_lock($lock);
 
