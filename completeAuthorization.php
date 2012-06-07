@@ -70,6 +70,9 @@ echo "callback>" . $callbackUrl;
             $_SESSION['state'] = 2;
             $_SESSION['token'] = $access_token_info['oauth_token'];
             $_SESSION['secret'] = $access_token_info['oauth_token_secret'];
+            
+echo "<br>>" . $_SESSION['token'];
+echo "<br>>" . $_SESSION['secret'];
         } 
 
         // Setting asccess token to the OAuth object
