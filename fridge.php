@@ -80,6 +80,9 @@ switch ($_GET['action'])
     
     $fitbit = sdb_fridge_get_fitbit($sdb);
 
+    $dat = date('Y-m-d');
+    $calories_out = get_calories($dat);
+    $calories_goal = 1000;
 
     if ($fitbit->Attribute[0]->Value == 0)
     {
@@ -88,6 +91,15 @@ switch ($_GET['action'])
     }
     else
     {
+      if ($calories_out > $calories_goal)
+      {
+        write_lock("1");
+      }
+      else
+      {
+        write_lock("0");
+      }
+
       $fitbit_text = "On";
       $fitbit_link = "<a href='fridge.php?action=fitbit&val=0'>fitbit mode off</a>";
     }
@@ -103,9 +115,6 @@ switch ($_GET['action'])
       $lock_text = "Locked";
       $lock_link = "<a href='fridge.php?action=lock&val=0'>unlock fridge</a>";
     }
-
-    $dat = date('Y-m-d');
-    $calories_out = get_calories($dat);
 
     $html = "<center>" .
 "<span class='milk'><b>Fridge is: <i>${lock_text}</i></b></span><br>${lock_link}<br><br>" .
