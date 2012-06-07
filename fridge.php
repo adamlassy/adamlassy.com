@@ -2,12 +2,20 @@
 
 //require_once 'xmlrpc/lib/xmlrpc.inc';
 require_once 'fridge_sdb.php';
+require_once 'fridge_fitbit.php';
 
 $rpc_key = 'c0701883da4d00b2d48723c8fa54d51008b32132';  // Set your rpc_key here
 $json_key = '5cd62861daf5efb419c545116b0f6b31';
 
+
 switch ($_GET['action'])
 {
+
+  case "fitbit":
+
+    $sdb = new AmazonSDB();
+    sdb_fridge_set_fitbit($sdb,$_GET["val"]);
+    break;
 
   case "lock":
 
@@ -70,8 +78,21 @@ switch ($_GET['action'])
 
     $milk = sdb_fridge_get_milk($sdb);
     
-    $lock = sdb_fridge_get_lock($sdb);
+    $fitbit = sdb_fridge_get_fitbit($sdb);
 
+
+    if ($fitbit->Attribute[0]->Value == 0)
+    {
+      $fitbit_text = "Off";
+      $fitbit_link = "<a href='fridge.php?action=fitbit&val=1'>fitbit mode on</a>";
+    }
+    else
+    {
+      $fitbit_text = "On";
+      $fitbit_link = "<a href='fridge.php?action=fitbit&val=0'>fitbit mode off</a>";
+    }
+
+    $lock = sdb_fridge_get_lock($sdb);
     if ($lock == 0)
     {
       $lock_text = "Unlocked";
@@ -83,7 +104,15 @@ switch ($_GET['action'])
       $lock_link = "<a href='fridge.php?action=lock&val=0'>unlock fridge</a>";
     }
 
-    $html = "<center><span class='milk'><b>Fridge is: <i>${lock_text}</i></b></span><br>${lock_link}<br><br><span class='milk'><b>Milk: ${milk}</b></span></center><br><br></center>" . $item_html;
+    $dat = date('Y-m-d');
+    $calories_out = get_calories($dat);
+
+    $html = "<center>" .
+"<span class='milk'><b>Fridge is: <i>${lock_text}</i></b></span><br>${lock_link}<br><br>" .
+"<span class='milk'><b>Fitbit Mode: <i>${fitbit_text}</i></b></span><br>${calories_out} of 1000 Calories for {$dat}<br>${fitbit_link}<br><br>" .
+"<span class='milk'><b>Milk: ${milk}</b></span></center><br><br>" . 
+$item_html;
+
     display_html($html);
 
     break;

@@ -1,8 +1,6 @@
 <?php
 
-echo ">" . get_calories();
-
-function get_calories()
+function get_calories($dat)
 {
 
     // Base URL
@@ -24,7 +22,6 @@ function get_calories()
     $conssec = '79212ddbed1d4e3a846e6a6c32b11db0';
 
     // Fitbit API call (get activities for specified date)
-    $dat = date('Y-m-d');
     //$apiCall = "http://api.fitbit.com/1/user/-/activities/date/" . $dat . ".xml";
     $apiCall = "http://api.fitbit.com/1/user/-/activities/date/2012-05-08.xml";
 
@@ -47,7 +44,7 @@ function get_calories()
         {
             // Getting request token. Callback URL is the Absolute URL to which the server provder will redirect the User back when the obtaining user authorization step is completed.
 
-	    $callbackUrl = "http://adamlassyphp.elasticbeanstalk.com/fridge_fitbit.php";
+	    $callbackUrl = "http://adamlassyphp.elasticbeanstalk.com/fridge.php";
             $request_token_info = $oauth->getRequestToken($req_url, $callbackUrl);
 
             // Storing key and state in a session.

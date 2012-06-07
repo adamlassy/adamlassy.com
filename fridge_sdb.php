@@ -38,6 +38,22 @@ function sdb_fridge_set_lock($_sdb,$val)
 		);
 }
 
+function sdb_fridge_set_fitbit($_sdb,$status,$oauth_token="",$oauth_verifier="")
+{
+	$domain = "undercurrent.fridge.fitbit";
+
+	$_sdb->delete_attributes($domain, "fitbit");
+		
+        $add_attributes = $_sdb->batch_put_attributes($domain, array(
+				"fitbit" => array(
+					'oauth_token' => $oauth_token,
+					'oauth_verifier' => $oauth_verifier,
+					'status' => $status
+				)
+			)
+		);
+}
+
 function sdb_fridge_set_milk($_sdb,$weight)
 {
 	$domain = "undercurrent.fridge.milk";
@@ -82,6 +98,20 @@ function sdb_fridge_get_lock($_sdb)
         }
 
 	return $open;
+}
+
+function sdb_fridge_get_fitbit($_sdb)
+{
+	$domain = "undercurrent.fridge.fitbit";
+
+	$results = $_sdb->select("SELECT * FROM `{$domain}` WHERE ItemName()='fitbit'");
+	$items = $results->body->Item();
+
+        if ($items[0])
+        {
+	  return $items[0];
+        }
+        return null;
 }
 
 function sdb_fridge_get_milk($_sdb)
@@ -176,9 +206,9 @@ function sdb_fridge_get_items($_sdb)
 }
 
 
-	//$sdb = new AmazonSDB();
+	$sdb = new AmazonSDB();
         //$sdb->delete_domain('undercurrent.fridge.item');
-	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.item');
+	sdb_fridge_create_domain($sdb,'undercurrent.fridge.fitbit');
 
 /*%******************************************************************************************%*/
 // HELPER FUNCTIONS
