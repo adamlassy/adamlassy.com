@@ -39,7 +39,7 @@
         {
             // Getting request token. Callback URL is the Absolute URL to which the server provder will redirect the User back when the obtaining user authorization step is completed.
 
-	    $callbackUrl = "http://adamlassyphp.elasticbeanstalk.com/completeAuthorization.php";
+	    $callbackUrl = "http://adamlassyphp.elasticbeanstalk.com/fridge_fitbit.php";
             $request_token_info = $oauth->getRequestToken($req_url, $callbackUrl);
 
             // Storing key and state in a session.
