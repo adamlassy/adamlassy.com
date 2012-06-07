@@ -1,6 +1,6 @@
 <?php
 
-    echo "2";
+    echo "3<br>";
     $b = $a;
 
     // Base URL
@@ -67,16 +67,21 @@ echo "callback>" . $callbackUrl;
             $access_token_info = $oauth->getAccessToken($acc_url);
 
             // Storing key and state in a session.
-            $_SESSION['state'] = 2;
-            $_SESSION['token'] = $access_token_info['oauth_token'];
-            $_SESSION['secret'] = $access_token_info['oauth_token_secret'];
+           // $_SESSION['state'] = 2;
+           // $_SESSION['token'] = $_GET['token'];  //$access_token_info['oauth_token'];
+           // $_SESSION['secret'] = $_GET['secret'];  //$access_token_info['oauth_token_secret'];
             
-echo "<br>>" . $_SESSION['token'];
-echo "<br>>" . $_SESSION['secret'];
+             $state = 2;
+             $token = $access_token_info['oauth_token'];
+             $secret = $access_token_info['oauth_token_secret'];
+
         } 
+echo "<br>>" . $state;
+echo "<br>>" . $token;
+echo "<br>>" . $secret;
 
         // Setting asccess token to the OAuth object
-        $oauth->setToken($_SESSION['token'],$_SESSION['secret']);
+        $oauth->setToken($token,$secret);
 
         // Performing API call 
         $oauth->fetch($apiCall);
