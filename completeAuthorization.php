@@ -1,4 +1,6 @@
 <?php
+    $b = $a;
+
     // Base URL
     $baseUrl = 'http://api.fitbit.com';
     
