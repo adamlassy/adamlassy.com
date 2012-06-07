@@ -2,9 +2,6 @@
     //babbjw@gmail.com
     //undercurrent
 
-    echo "3<br>";
-    $b = $a;
-
     // Base URL
     $baseUrl = 'http://api.fitbit.com';
     
@@ -31,7 +28,6 @@
     // Start session to store the information between calls
     session_start();
 
-
     if ($_GET['state'])
     {
       $state = $_GET['state'];
@@ -41,10 +37,9 @@
       $state = $_SESSION['state'];
     }
 
-
     // In state=1 the next request should include an oauth_token.
     // If it doesn't go back to 0
-    if ( !isset($_GET['oauth_token']) && $state==1 ) $_SESSION['state'] = 0;
+    if ( !isset($_GET['oauth_token']) && $state==1 ) $state = 0;
 
     try 
     {
@@ -66,7 +61,7 @@ echo "callback>" . $callbackUrl;
 
             // Storing key and state in a session.
             $_SESSION['secret'] = $request_token_info['oauth_token_secret'];
-            $_SESSION['state'] = 1;
+            $state = 1;
 
             // Redirect to the authorization.
             header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
@@ -94,8 +89,9 @@ echo "callback>" . $callbackUrl;
              $token = $_GET['token'];
              $secret = $_GET['secret'];
         }
-echo "<br>" . $_SESSION['state'];
-echo "<br>&token=" . $token . "&secret=" . $secret;
+
+//echo "<br>" . $_SESSION['state'];
+//echo "<br>&token=" . $token . "&secret=" . $secret;
 
         // Setting asccess token to the OAuth object
         $oauth->setToken($token,$secret);
@@ -113,34 +109,8 @@ echo "<br>&token=" . $token . "&secret=" . $secret;
     {
         print_r($E);
     }
+
+    $_SESSION['state'] = $state;
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <title>Fitbit Example</title>
-  </head>
-  <body>
-  <!-- Show activities on the page -->
-    Unit System: <?php echo $xml->unitSystem ?><br />
-    Active Score: <?php echo $xml->summary->activeScore ?><br />
-    Calories Out: <?php echo $xml->summary->caloriesOut ?><br />
-    Fairly Active Minutes: <?php echo $xml->summary->fairlyActiveMinutes ?><br />
-    Lightly Active Minutes: <?php echo $xml->summary->lightlyActiveMinutes ?><br />
-    Very Active Minutes: <?php echo $xml->summary->veryActiveMinutes ?><br />    
-    Sedentary Minutes: <?php echo $xml->summary->sedentaryMinutes ?><br />    
-    Steps: <?php echo $xml->summary->steps ?><br />
-    Distances:<br />
-    <table border="1">
-      <tr>
-        <th>Activity</th>
-        <th>Distance</th>
-      </tr>
-      <?php foreach ($xml->summary->distances->activityDistance as $distance) { ?>
-        <tr>
-          <td><?php echo $distance->activity ?></td>
-          <td><?php echo $distance->distance ?></td>
-        </tr>
-      <?php } ?>
-    </table>
-  </body>
-</html>
+
+<?php echo $xml->summary->caloriesOut ?>
