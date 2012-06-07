@@ -12,10 +12,12 @@
     $acc_url = $baseUrl . '/oauth/access_token';
 
     // Consumer key
-    $conskey = 'local-fitbit-example-php-client-application';
+    //$conskey = 'local-fitbit-example-php-client-application';
+    $conskey = '2baf86f824bd42a489c49fe1714a47de';
 
     // Consumer secret
-    $conssec = 'e388e4f4d6f4cc10ff6dc0fd1637da370478e49e2';
+    //$conssec = 'e388e4f4d6f4cc10ff6dc0fd1637da370478e49e2';
+    $conssec = '79212ddbed1d4e3a846e6a6c32b11db0';
 
     // Fitbit API call (get activities for specified date)
     $apiCall = "http://api.fitbit.com/1/user/-/activities/date/2011-01-25.xml";
