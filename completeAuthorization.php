@@ -1,4 +1,6 @@
 <?php
+    //babbjw@gmail.com
+    //undercurrent
 
     echo "3<br>";
     $b = $a;
@@ -74,11 +76,14 @@ echo "callback>" . $callbackUrl;
              $state = 2;
              $token = $access_token_info['oauth_token'];
              $secret = $access_token_info['oauth_token_secret'];
-
         } 
-echo "<br>>" . $state;
-echo "<br>>" . $token;
-echo "<br>>" . $secret;
+        else
+        {
+             $token = $_GET['token'];
+             $secret = $_GET['secret'];
+        }
+echo "<br>" . $state;
+echo "<br>&token=" . $token . "&secret=" . $secret;
 
         // Setting asccess token to the OAuth object
         $oauth->setToken($token,$secret);
