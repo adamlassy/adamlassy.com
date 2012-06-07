@@ -1,4 +1,10 @@
 <?php
+
+echo ">" . get_calories();
+
+function get_calories()
+{
+
     // Base URL
     $baseUrl = 'http://api.fitbit.com';
     
@@ -78,34 +84,6 @@
     {
         print_r($E);
     }
-?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <title>Fitbit Example</title>
-  </head>
-  <body>
-  <!-- Show activities on the page -->
-    Unit System: <?php echo $xml->unitSystem ?><br />
-    Active Score: <?php echo $xml->summary->activeScore ?><br />
-    Calories Out: <?php echo $xml->summary->caloriesOut ?><br />
-    Fairly Active Minutes: <?php echo $xml->summary->fairlyActiveMinutes ?><br />
-    Lightly Active Minutes: <?php echo $xml->summary->lightlyActiveMinutes ?><br />
-    Very Active Minutes: <?php echo $xml->summary->veryActiveMinutes ?><br />    
-    Sedentary Minutes: <?php echo $xml->summary->sedentaryMinutes ?><br />    
-    Steps: <?php echo $xml->summary->steps ?><br />
-    Distances:<br />
-    <table border="1">
-      <tr>
-        <th>Activity</th>
-        <th>Distance</th>
-      </tr>
-      <?php foreach ($xml->summary->distances->activityDistance as $distance) { ?>
-        <tr>
-          <td><?php echo $distance->activity ?></td>
-          <td><?php echo $distance->distance ?></td>
-        </tr>
-      <?php } ?>
-    </table>
-  </body>
-</html>
+
+    return $xml->summary->caloriesOut;
+}
