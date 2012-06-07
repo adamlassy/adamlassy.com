@@ -69,7 +69,7 @@ echo "callback>" . $callbackUrl;
             $access_token_info = $oauth->getAccessToken($acc_url);
 
             // Storing key and state in a session.
-           // $_SESSION['state'] = 2;
+           $_SESSION['state'] = 2;
            // $_SESSION['token'] = $_GET['token'];  //$access_token_info['oauth_token'];
            // $_SESSION['secret'] = $_GET['secret'];  //$access_token_info['oauth_token_secret'];
             
@@ -77,12 +77,13 @@ echo "callback>" . $callbackUrl;
              $token = $access_token_info['oauth_token'];
              $secret = $access_token_info['oauth_token_secret'];
         } 
-        else
+
+        if ($_GET['token'])
         {
              $token = $_GET['token'];
              $secret = $_GET['secret'];
         }
-echo "<br>" . $state;
+echo "<br>" . $_SESSION['state'];
 echo "<br>&token=" . $token . "&secret=" . $secret;
 
         // Setting asccess token to the OAuth object
