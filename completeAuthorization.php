@@ -52,7 +52,8 @@ echo "callback>" . $callbackUrl;
             $_SESSION['state'] = 1;
 
             // Redirect to the authorization.
-            header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
+            //header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
+            echo('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
             exit;
         } 
         else if ( $_SESSION['state']==1 ) 
