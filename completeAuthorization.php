@@ -37,10 +37,15 @@
         // Enable ouath debug (should be disabled in production)
         $oauth->enableDebug();
 
+echo "STATE>" . $_SESSION['state'];
+
         if ( $_SESSION['state'] == 0 ) 
         {
             // Getting request token. Callback URL is the Absolute URL to which the server provder will redirect the User back when the obtaining user authorization step is completed.
+
+echo "callback>" . $callbackUrl;
             $request_token_info = $oauth->getRequestToken($req_url, $callbackUrl);
+echo "callback>" . $callbackUrl;
 
             // Storing key and state in a session.
             $_SESSION['secret'] = $request_token_info['oauth_token_secret'];
