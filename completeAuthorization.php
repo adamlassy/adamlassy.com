@@ -23,7 +23,10 @@
     $conssec = '79212ddbed1d4e3a846e6a6c32b11db0';
 
     // Fitbit API call (get activities for specified date)
-    $apiCall = "http://api.fitbit.com/1/user/-/activities/date/2012-05-08.xml";
+    $dat = date('Y-m-d');
+    $apiCall = "http://api.fitbit.com/1/user/-/activities/date/" . $dat . ".xml";
+    //$apiCall = "http://api.fitbit.com/1/user/-/activities/date/2012-05-08.xml";
+
 
     // Start session to store the information between calls
     session_start();
@@ -75,13 +78,17 @@ echo "callback>" . $callbackUrl;
             $access_token_info = $oauth->getAccessToken($acc_url);
 
             // Storing key and state in a session.
-           $_SESSION['state'] = 2;
-           // $_SESSION['token'] = $_GET['token'];  //$access_token_info['oauth_token'];
-           // $_SESSION['secret'] = $_GET['secret'];  //$access_token_info['oauth_token_secret'];
+            $_SESSION['state'] = 2;
+           
+	     $_SESSION['token'] = $access_token_info['oauth_token'];
+             $_SESSION['secret'] = $access_token_info['oauth_token_secret'];
             
+	     //$_SESSION['token'] = $_GET['token'];  //$access_token_info['oauth_token'];
+             //$_SESSION['secret'] = $_GET['secret'];  //$access_token_info['oauth_token_secret'];
+             
              $state = 2;
-             $token = $access_token_info['oauth_token'];
-             $secret = $access_token_info['oauth_token_secret'];
+             //$token = $access_token_info['oauth_token'];
+             //$secret = $access_token_info['oauth_token_secret'];
         } 
 
         if ($_GET['token'])
@@ -90,11 +97,9 @@ echo "callback>" . $callbackUrl;
              $secret = $_GET['secret'];
         }
 
-//echo "<br>" . $_SESSION['state'];
-//echo "<br>&token=" . $token . "&secret=" . $secret;
-
         // Setting asccess token to the OAuth object
-        $oauth->setToken($token,$secret);
+        $oauth->setToken($_SESSION['token'],$_SESSION['secret']);
+        //$oauth->setToken($token,$secret);
 
         // Performing API call 
         $oauth->fetch($apiCall);
