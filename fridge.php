@@ -121,7 +121,7 @@ switch ($_GET['action'])
 
     $html = "<center>" .
 "<span class='milk'><b>Fridge is: <i>${lock_text}</i></b></span><br>${lock_link}<br><br>" .
-"<span class='milk'><b>Fitbit Mode: <i>${fitbit_text}</i></b><br>${calories_out} of 1000 Calories for {$dat}</span><br>${fitbit_link}<br><br>" .
+"<span class='milk'><b>Fitbit Mode: <i>${fitbit_text}</i></b><br>${calories_out} of ${calories_goal} Calories for {$dat}</span><br>${fitbit_link}<br><br>" .
 "<span class='milk'><b>Milk: ${milk}</b></span></center><br><br>" . 
 $item_html;
 
