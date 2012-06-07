@@ -31,9 +31,20 @@
     // Start session to store the information between calls
     session_start();
 
+
+    if ($_GET['state'])
+    {
+      $state = $_GET['state'];
+    }
+    else
+    {
+      $state = $_SESSION['state'];
+    }
+
+
     // In state=1 the next request should include an oauth_token.
     // If it doesn't go back to 0
-    if ( !isset($_GET['oauth_token']) && $_SESSION['state']==1 ) $_SESSION['state'] = 0;
+    if ( !isset($_GET['oauth_token']) && $state==1 ) $_SESSION['state'] = 0;
 
     try 
     {
@@ -43,9 +54,9 @@
         // Enable ouath debug (should be disabled in production)
         $oauth->enableDebug();
 
-echo "STATE>" . $_SESSION['state'];
+echo "STATE>" . $state;
 
-        if ( $_SESSION['state'] == 0 ) 
+        if ( $state == 0 ) 
         {
             // Getting request token. Callback URL is the Absolute URL to which the server provder will redirect the User back when the obtaining user authorization step is completed.
 
@@ -62,7 +73,7 @@ echo "callback>" . $callbackUrl;
             //echo('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
             exit;
         } 
-        else if ( $_SESSION['state']==1 ) 
+        else if ( $state==1 ) 
         {
             // Authorized. Getting access token and secret
             $oauth->setToken($_GET['oauth_token'],$_SESSION['secret']);
