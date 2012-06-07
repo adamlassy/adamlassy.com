@@ -1,4 +1,5 @@
 <?php
+    echo << "1";
     $b = $a;
 
     // Base URL
