@@ -1,5 +1,6 @@
 <?php
-    echo "1";
+
+    echo "2";
     $b = $a;
 
     // Base URL
@@ -23,7 +24,7 @@
     $conssec = '79212ddbed1d4e3a846e6a6c32b11db0';
 
     // Fitbit API call (get activities for specified date)
-    $apiCall = "http://api.fitbit.com/1/user/-/activities/date/2011-01-25.xml";
+    $apiCall = "http://api.fitbit.com/1/user/-/activities/date/2012-05-08.xml";
 
     // Start session to store the information between calls
     session_start();
