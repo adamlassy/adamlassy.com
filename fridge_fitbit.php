@@ -28,6 +28,8 @@ function get_calories($dat,$objFitbit,$_sdb)
     for ($i = 0; $i<count($objFitbit->Attribute[0]); $i++)
     {
       $arrFit[$objFitbit->Attribute[$i]->Name] = $objFitbit->Attribute[i]->Value;
+
+echo $i . ">" . $objFitbit->Attribute[$i]->Name . ">" . $objFitbit->Attribute[i]->Value . ">" . $arrFit[$objFitbit->Attribute[$i]->Name] . "<bR>";
     }
     $state = $arrFit['state'];
     $status = $arrFit['status'];
@@ -71,7 +73,8 @@ function get_calories($dat,$objFitbit,$_sdb)
             sdb_fridge_set_fitbit($_sdb,$status,$token,$secret,$state,$calorie_limit);
 
             // Redirect to the authorization.
-            header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
+            //header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
+
             exit;
         } 
         else if ( $state==1 ) 
