@@ -126,7 +126,6 @@ switch ($_GET['action'])
     }
     else
     {
-echo ">" . $calories_out . ">" . $calories_goal . "-";
 
       if ((int)$calories_out >= (int)$calories_goal)
       {
@@ -136,7 +135,6 @@ echo ">" . $calories_out . ">" . $calories_goal . "-";
       {
         $lock = "1";
       }
-echo "LOCK" . $lock;
       write_lock($lock);
 
       $fitbit_text = "On";
