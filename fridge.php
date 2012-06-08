@@ -9,7 +9,7 @@ $json_key = '5cd62861daf5efb419c545116b0f6b31';
 
 
 if ($_GET['calories']) { 
-  $calories_limit = $_GET['calories'];
+  $calorie_limit = $_GET['calories'];
     
     $fitbit = sdb_fridge_get_fitbit($sdb);
 
