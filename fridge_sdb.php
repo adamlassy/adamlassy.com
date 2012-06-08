@@ -63,7 +63,7 @@ function sdb_fridge_set_fitbit($_sdb,$status,$token="",$secret="",$state="",$cal
 					'token' => $token,
 					'secret' => $secret,
 					'state' => $state,
-					'calorie_limit' = > $calorie_limit,
+					'calorie_limit' =>  $calorie_limit,
 					'status' => $status
 				)
 			)
