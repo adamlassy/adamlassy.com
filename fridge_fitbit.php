@@ -3,21 +3,6 @@
 function get_calories($dat,$objFitbit,$_sdb)
 {
 
-    $state = $objFitbit->Attribute[3]->Value;
-    $status = $objFitbit->Attribute[0]->Value;
-    $token = $objFitbit->Attribute[2]->Value;
-    $secret = $objFitbit->Attribute[4]->Value;
-    $calorie_limit = $objFitbit->Attribute[1]->Value;
-
-echo ">" . $state;
-echo ">" . $status;
-echo ">" . $token;
-echo ">" . $secret;
-echo ">" . $calorie_limit;
-
-sdb_fridge_set_fitbit($_sdb,"status","token","secret","state","calorie_limit");
-
-/*
     // Base URL
     $baseUrl = 'http://api.fitbit.com';
     
@@ -81,8 +66,9 @@ sdb_fridge_set_fitbit($_sdb,"status","token","secret","state","calorie_limit");
             sdb_fridge_set_fitbit($_sdb,$status,$token,$secret,$state,$calorie_limit);
 
             // Redirect to the authorization.
-            //header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
+            header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
 
+echo "here";
             exit;
         } 
         else if ( $state==1 ) 
@@ -121,5 +107,4 @@ sdb_fridge_set_fitbit($_sdb,"status","token","secret","state","calorie_limit");
   
     return $xml->summary->caloriesOut;
 
-*/
 }
