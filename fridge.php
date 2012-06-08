@@ -43,7 +43,7 @@ switch ($_GET['action'])
     $calories_out = get_calories($dat,$fitbit,$sdb);
     $calories_goal = $fitbit->Attribute[1]->Value;
 
-    if ($calories_out > $calories_goal)
+    if ((int)$calories_out > (int)$calories_goal)
     {
       $lock_status = 0;
       sdb_fridge_set_lock($sdb,$lock_status);
@@ -126,9 +126,9 @@ switch ($_GET['action'])
     }
     else
     {
-echo ">" . $calories_out . ">" . $calories_goal . "<";
+echo ">" . $calories_out . ">" . $calories_goal . "-";
 
-      if ($calories_out > $calories_goal)
+      if ((int)$calories_out > (int)$calories_goal)
       {
         $lock = "0";
       }
