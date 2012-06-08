@@ -8,8 +8,18 @@ $rpc_key = 'c0701883da4d00b2d48723c8fa54d51008b32132';  // Set your rpc_key here
 $json_key = '5cd62861daf5efb419c545116b0f6b31';
 
 
-if ($_GET['calories']) { $calories_goal = $_GET['calories'];}
-else {$calories_goal = 1000;}
+if ($_GET['calories']) { 
+  $calories_limit = $_GET['calories'];
+    
+    $fitbit = sdb_fridge_get_fitbit($sdb);
+
+    $status = $fitbit->Attribute[0]->Value;
+    $state = $fitbit->Attribute[3]->Value;
+    $token = $fitbit->Attribute[2]->Value;
+    $secret = $fitbit->Attribute[4]->Value;
+
+    sdb_fridge_set_fitbit($sdb,$status,$token,$secret,$state,$calorie_limit);
+}
 
 switch ($_GET['action'])
 {
@@ -23,9 +33,9 @@ switch ($_GET['action'])
     $state = $fitbit->Attribute[3]->Value;
     $token = $fitbit->Attribute[2]->Value;
     $secret = $fitbit->Attribute[4]->Value;
-    $calorie_limit = $fitbit->Attribute[1]->Value;
+    $calorie_goal = $fitbit->Attribute[1]->Value;
 
-    sdb_fridge_set_fitbit($_sdb,$_GET["val"],$token,$secret,$state,$calorie_limit);
+    sdb_fridge_set_fitbit($sdb,$_GET["val"],$token,$secret,$state,$calorie_goal);
     break;
 
   case "lock":
@@ -41,10 +51,12 @@ switch ($_GET['action'])
     write_milk($_GET["val"]);
 
     $sdb = new AmazonSDB();
+    $fitbit = sdb_fridge_get_fitbit($sdb);
     $calories_out = get_calories($dat,$fitbit,$sdb);
+    $calories_goal = $fitbit->Attribute[1]->Value;
+
     if ($calories_out > $calories_goal)
     {
-
       $lock_status = 0;
       sdb_fridge_set_lock($sdb,$lock_status);
     }
@@ -101,6 +113,7 @@ switch ($_GET['action'])
     
     $fitbit = sdb_fridge_get_fitbit($sdb);
     $fitbit_mode = $fitbit->Attribute[0]->Value;
+    $calories_goal = $fitbit->Attribute[1]->Value;
 
     $dat = date('Y-m-d');
     $calories_out = get_calories($dat,$fitbit,$sdb);

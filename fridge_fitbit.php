@@ -1,5 +1,8 @@
 <?php
 
+//email: babbjw@gmail.com
+//pw: undercurrent
+
 function get_calories($dat,$objFitbit,$_sdb)
 {
 
@@ -74,7 +77,6 @@ function get_calories($dat,$objFitbit,$_sdb)
             // Redirect to the authorization.
             header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
 
-echo "here";
             exit;
         } 
         else if ( $state==1 ) 
