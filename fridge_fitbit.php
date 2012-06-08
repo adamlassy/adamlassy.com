@@ -62,7 +62,7 @@ function get_calories($dat,$objFitbit,$_sdb)
             // Storing key and state in a session.
             $secret = $request_token_info['oauth_token_secret'];
             $state = 1;
-            $write_fitbit = true;
+            sdb_fridge_set_fitbit($_sdb,$status,$token,$secret,$state,$calorie_limit);
 
             // Redirect to the authorization.
             header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
