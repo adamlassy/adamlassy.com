@@ -103,6 +103,17 @@ switch ($_GET['action'])
     $fitbit_mode = $fitbit->Attribute[0]->Value;
     $calories_goal = $fitbit->Attribute[1]->Value;
 
+    if ($_GET['calories']) { 
+      $calories_goal = $_GET['calories'];
+    
+      $status = $fitbit->Attribute[0]->Value;
+      $state = $fitbit->Attribute[3]->Value;
+      $token = $fitbit->Attribute[2]->Value;
+      $secret = $fitbit->Attribute[4]->Value;
+
+      sdb_fridge_set_fitbit($sdb,$status,$token,$secret,$state,$calories_goal);
+    }
+
     $dat = date('Y-m-d');
     $calories_out = get_calories($dat,$fitbit,$sdb);
 
@@ -176,18 +187,6 @@ function write_upc($upc,$sProduct,$sDesc)
 
 }
 
-if ($_GET['calories']) { 
-  $calorie_limit = $_GET['calories'];
-    
-    $fitbit = sdb_fridge_get_fitbit($sdb);
-
-    $status = $fitbit->Attribute[0]->Value;
-    $state = $fitbit->Attribute[3]->Value;
-    $token = $fitbit->Attribute[2]->Value;
-    $secret = $fitbit->Attribute[4]->Value;
-
-    sdb_fridge_set_fitbit($sdb,$status,$token,$secret,$state,$calorie_limit);
-}
 
 ?>
 
