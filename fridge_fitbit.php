@@ -24,18 +24,11 @@ function get_calories($dat,$objFitbit,$_sdb)
     //Get FitBit info
     $write_fitbit = false;
 
-    $arrFit = array(); 
-    for ($i = 0; $i<count($objFitbit->Attribute); $i++)
-    {
-      $arrFit[$objFitbit->Attribute[$i]->Name] = $objFitbit->Attribute[$i]->Value;
-
-echo $i . ">" . $objFitbit->Attribute[$i]->Name . ">" . $objFitbit->Attribute[$i]->Value . ">" . $arrFit[$objFitbit->Attribute[$i]->Name] . ">" . $arrFit->state . "<bR>";
-    }
-    $state = $arrFit['state'];
-    $status = $arrFit['status'];
-    $token = $arrFit['token'];
-    $secret = $arrFit['secret'];
-    $calorie_limit = $arrFit['calorie_limit'];
+    $state = $objFitbit->Attribute[3]->Value;
+    $status = $objFitbit->Attribute[0]->Value;
+    $token = $objFitbit->Attribute[2]->Value;
+    $secret = $objFitbit->Attribute[4]->Value;
+    $calorie_limit = $objFitbit->Attribute[1]->Value;
 
     // Fitbit API call (get activities for specified date)
     $apiCall = "http://api.fitbit.com/1/user/-/activities/date/" . $dat . ".xml";
