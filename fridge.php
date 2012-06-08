@@ -8,18 +8,6 @@ $rpc_key = 'c0701883da4d00b2d48723c8fa54d51008b32132';  // Set your rpc_key here
 $json_key = '5cd62861daf5efb419c545116b0f6b31';
 
 
-if ($_GET['calories']) { 
-  $calorie_limit = $_GET['calories'];
-    
-    $fitbit = sdb_fridge_get_fitbit($sdb);
-
-    $status = $fitbit->Attribute[0]->Value;
-    $state = $fitbit->Attribute[3]->Value;
-    $token = $fitbit->Attribute[2]->Value;
-    $secret = $fitbit->Attribute[4]->Value;
-
-    sdb_fridge_set_fitbit($sdb,$status,$token,$secret,$state,$calorie_limit);
-}
 
 switch ($_GET['action'])
 {
@@ -186,6 +174,19 @@ function write_upc($upc,$sProduct,$sDesc)
     sdb_fridge_add_history($sdb, $upc, $sProduct, $sDesc, $method);
     sdb_fridge_add_item($sdb, $upc, $sProduct, $sDesc, $method);
 
+}
+
+if ($_GET['calories']) { 
+  $calorie_limit = $_GET['calories'];
+    
+    $fitbit = sdb_fridge_get_fitbit($sdb);
+
+    $status = $fitbit->Attribute[0]->Value;
+    $state = $fitbit->Attribute[3]->Value;
+    $token = $fitbit->Attribute[2]->Value;
+    $secret = $fitbit->Attribute[4]->Value;
+
+    sdb_fridge_set_fitbit($sdb,$status,$token,$secret,$state,$calorie_limit);
 }
 
 ?>
