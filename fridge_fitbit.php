@@ -1,6 +1,6 @@
 <?php
 
-function get_calories($dat)
+function get_calories($dat,$objFitbit,$_sdb)
 {
 
     // Base URL
@@ -21,16 +21,28 @@ function get_calories($dat)
     // Consumer secret
     $conssec = '79212ddbed1d4e3a846e6a6c32b11db0';
 
+    //Get FitBit info
+    $write_fitbit = false;
+    $status = $objFitbit->Attribute[0]->Value;
+    $token = $objFitbit->Attribute[1]->Value;
+    $secret = $objFitbit->Attribute[2]->Value;
+    $state = $objFitbit->Attribute[3]->Value;
+    $calorie_limit = $objFitbit->Attribute[4]->Value;
+
     // Fitbit API call (get activities for specified date)
     $apiCall = "http://api.fitbit.com/1/user/-/activities/date/" . $dat . ".xml";
     //$apiCall = "http://api.fitbit.com/1/user/-/activities/date/2012-05-08.xml";
 
     // Start session to store the information between calls
-    session_start();
+    //session_start();
 
     // In state=1 the next request should include an oauth_token.
     // If it doesn't go back to 0
-    if ( !isset($_GET['oauth_token']) && $_SESSION['state']==1 ) $_SESSION['state'] = 0;
+    if ( !isset($_GET['oauth_token']) && $state==1 ) {
+      $state = 0;
+      $write_fitbit = true;
+    }
+
 
     try 
     {
@@ -40,7 +52,7 @@ function get_calories($dat)
         // Enable ouath debug (should be disabled in production)
         $oauth->enableDebug();
 
-        if ( $_SESSION['state'] == 0 ) 
+        if ( $state == 0 ) 
         {
             // Getting request token. Callback URL is the Absolute URL to which the server provder will redirect the User back when the obtaining user authorization step is completed.
 
@@ -48,27 +60,29 @@ function get_calories($dat)
             $request_token_info = $oauth->getRequestToken($req_url, $callbackUrl);
 
             // Storing key and state in a session.
-            $_SESSION['secret'] = $request_token_info['oauth_token_secret'];
-            $_SESSION['state'] = 1;
+            $secret = $request_token_info['oauth_token_secret'];
+            $state = 1;
+            $write_fitbit = true;
 
             // Redirect to the authorization.
             header('Location: '.$authurl.'?oauth_token='.$request_token_info['oauth_token']);
             exit;
         } 
-        else if ( $_SESSION['state']==1 ) 
+        else if ( $state==1 ) 
         {
             // Authorized. Getting access token and secret
-            $oauth->setToken($_GET['oauth_token'],$_SESSION['secret']);
+            $oauth->setToken($_GET['oauth_token'],$secret);
             $access_token_info = $oauth->getAccessToken($acc_url);
 
             // Storing key and state in a session.
-            $_SESSION['state'] = 2;
-            $_SESSION['token'] = $access_token_info['oauth_token'];
-            $_SESSION['secret'] = $access_token_info['oauth_token_secret'];
+            $state = 2;
+            $token = $access_token_info['oauth_token'];
+            $secret = $access_token_info['oauth_token_secret'];
+            $write_fitbit = true;
         } 
 
         // Setting asccess token to the OAuth object
-        $oauth->setToken($_SESSION['token'],$_SESSION['secret']);
+        $oauth->setToken($token,$secret);
 
         // Performing API call 
         $oauth->fetch($apiCall);
@@ -84,5 +98,9 @@ function get_calories($dat)
         print_r($E);
     }
 
+    //Now save the state
+    if ($write_fitbit) 
+      sdb_fridge_set_fitbit($_sdb,$status,$token,$secret,$state,$calorie_limit);
+  
     return $xml->summary->caloriesOut;
 }
