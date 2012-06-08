@@ -134,6 +134,7 @@ switch ($_GET['action'])
       {
         $lock = "1";
       }
+echo "LOCK" . $lock;
       write_lock($lock);
 
       $fitbit_text = "On";
