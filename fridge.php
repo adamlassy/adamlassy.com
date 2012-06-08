@@ -126,6 +126,8 @@ switch ($_GET['action'])
     }
     else
     {
+echo ">" . $calories_out . ">" . $calories_goal . "<";
+
       if ($calories_out > $calories_goal)
       {
         $lock = "0";
