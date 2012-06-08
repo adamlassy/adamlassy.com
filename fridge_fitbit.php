@@ -25,11 +25,11 @@ function get_calories($dat,$objFitbit,$_sdb)
     $write_fitbit = false;
 
     $arrFit = Array(); 
-    for ($i = 0; $i<count($objFitbit->Attribute[0]); $i++)
+    for ($i = 0; $i<count($objFitbit->Attribute); $i++)
     {
-      $arrFit[$objFitbit->Attribute[$i]->Name] = $objFitbit->Attribute[i]->Value;
+      $arrFit[$objFitbit->Attribute[$i]->Name] = $objFitbit->Attribute[$i]->Value;
 
-echo $i . ">" . $objFitbit->Attribute[$i]->Name . ">" . $objFitbit->Attribute[i]->Value . ">" . $arrFit[$objFitbit->Attribute[$i]->Name] . "<bR>";
+echo $i . ">" . $objFitbit->Attribute[$i]->Name . ">" . $objFitbit->Attribute[$i]->Value . ">" . $arrFit[$objFitbit->Attribute[$i]->Name] . "<bR>";
     }
     $state = $arrFit['state'];
     $status = $arrFit['status'];
