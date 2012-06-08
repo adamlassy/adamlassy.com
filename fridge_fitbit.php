@@ -30,6 +30,12 @@ function get_calories($dat,$objFitbit,$_sdb)
     $secret = $objFitbit->Attribute[4]->Value;
     $calorie_limit = $objFitbit->Attribute[1]->Value;
 
+    echo "<br>state: " . $state;
+    echo "<br>status: " . $status;
+    echo "<br>token: " . $token;
+    echo "<br>secret: " . $secret;
+    echo "<br>calorie_limit: " . $calorie_limi;
+
     // Fitbit API call (get activities for specified date)
     $apiCall = "http://api.fitbit.com/1/user/-/activities/date/" . $dat . ".xml";
     //$apiCall = "http://api.fitbit.com/1/user/-/activities/date/2012-05-08.xml";
