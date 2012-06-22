@@ -1,5 +1,8 @@
 <?php
 
+//AKIAI7NLYCLTK32TBMMA
+//LJcIPJbfqtpAHowAYavMVuddTs3IVsjnltnVx6pT
+
 /*%******************************************************************************************%*/
 // SETUP
 
@@ -372,7 +375,7 @@ function timedRefresh(timeoutPeriod) {
 </script>
 
         </head>
-<body onload="JavaScript:timedRefresh(3000);">
+<body onload="">
 	<?=$html?>
         </body>
         </html>
