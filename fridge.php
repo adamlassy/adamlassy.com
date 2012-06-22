@@ -61,7 +61,7 @@ switch ($_GET['action'])
 
     $name = "";
 
-    switch ($_GET['val')
+    switch ($_GET['val'])
     {
       case "08378354":
        $name = "Trader Joe's Lowfat Milk";
