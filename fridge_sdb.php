@@ -362,8 +362,17 @@ function display_html($html)
                         border: 1px solid #ccc;
                 }
                 </style>
+
+<script type="text/JavaScript">
+<!--
+function timedRefresh(timeoutPeriod) {
+	setTimeout("location.reload(true);",timeoutPeriod);
+}
+//   -->
+</script>
+
         </head>
-        <body>
+<body onload="JavaScript:timedRefresh(3000);">
 	<?=$html?>
         </body>
         </html>

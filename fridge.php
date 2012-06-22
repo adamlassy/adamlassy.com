@@ -59,25 +59,60 @@ switch ($_GET['action'])
 
   case "upc":
 
-    $json_url = "http://www.upcdatabase.org/api/json/" . $json_key . "/" . $_GET['val'];
- 
-    // Initializing curl
-    $ch = curl_init();
-
-    // Configuring curl options
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, 'Content-type: application/json');
-    curl_setopt($ch, CURLOPT_URL, $json_url);
-
-    // Getting results
-    $result =  curl_exec($ch); // Getting jSON result string
-
-    $result = json_decode($result, true);
-
     $name = "";
-    if ($result['valid'] == true)
+
+    switch ($_GET['val')
     {
-      $name = $result['itemname'] . " " . $result['description'];
+      case "08378354":
+       $name = "Trader Joe's Lowfat Milk";
+       break;
+      case "076301580015":
+       $name = "Apple Juice";
+       break;
+      case "051000000200":
+       $name = "CAMPBELL SOUP COMPANY, 5.5 oz CAMPBELLS V-8 JUICE 6PK";
+       break;
+      case "048500001745":
+       $name = "TROPICANA PRODUCTS, INC. 10 oz 100% Pure Orange Juice";
+       break;
+      case "048500008386":
+       $name = "TROPICANA PRODUCTS, INC. 10 Fl Oz Cranberry Cocktail";
+       break;
+      case "180127000005":
+       $name = "Zico pure coconut water";
+       break;
+      case "657622222015":
+       $name = "16oz Honest Tea organic honey green tea";
+       break;
+      case "657622814043":
+       $name = "16oz Honest Tea lemon tea";
+       break;
+    }
+
+
+    if ($name == "")
+    {
+ 
+      $json_url = "http://www.upcdatabase.org/api/json/" . $json_key . "/" . $_GET['val'];
+ 
+      // Initializing curl
+      $ch = curl_init();
+
+      // Configuring curl options
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, 'Content-type: application/json');
+      curl_setopt($ch, CURLOPT_URL, $json_url);
+
+      // Getting results
+      $result =  curl_exec($ch); // Getting jSON result string
+
+      $result = json_decode($result, true);
+
+      $name = "";
+      if ($result['valid'] == true)
+      {
+        $name = $result['itemname'] . " " . $result['description'];
+      }
     }
     write_upc($_GET['val'], $name, "");
 
