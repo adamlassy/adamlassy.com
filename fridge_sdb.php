@@ -366,7 +366,7 @@ function display_html($html)
 <script type="text/JavaScript">
 <!--
 function timedRefresh(timeoutPeriod) {
-	setTimeout("location.reload(true);",timeoutPeriod);
+	//setTimeout("location.reload(true);",timeoutPeriod);
 }
 //   -->
 </script>
