@@ -213,7 +213,7 @@ function sdb_fridge_get_items($_sdb)
 
 	$sdb = new AmazonSDB();
         //$sdb->delete_domain('undercurrent.fridge.item');
-	//sdb_fridge_create_domain($sdb,'undercurrent.fridge.fitbit');
+	sdb_fridge_create_domain($sdb,'undercurrent.fridge.item');
 
 /*%******************************************************************************************%*/
 // HELPER FUNCTIONS
@@ -273,7 +273,9 @@ function sdb_fridge_get_items($_sdb)
            for($i=0; $i<count($rows); $i++)
            {
 
-             $rows[$i]['count'][0] = count($rows[$i]['date']);
+             $count = count($rows[$i]['date']);
+             $rows[$i]['count'][0] = $count;
+             $rows[$i]['date'] = array($rows[$i]['date'][$count-1]);
            }
 	   $data['rows'] = $rows;
         }
