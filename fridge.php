@@ -2,12 +2,9 @@
 
 //require_once 'xmlrpc/lib/xmlrpc.inc';
 require_once 'fridge_sdb.php';
-require_once 'fridge_fitbit.php';
 
 $rpc_key = 'c0701883da4d00b2d48723c8fa54d51008b32132';  // Set your rpc_key here
 $json_key = '5cd62861daf5efb419c545116b0f6b31';
-
-
 
 switch ($_GET['action'])
 {
@@ -39,6 +36,8 @@ switch ($_GET['action'])
     write_milk($_GET["val"]);
 
     $sdb = new AmazonSDB();
+
+/*
     $fitbit = sdb_fridge_get_fitbit($sdb);
     $calories_out = get_calories($dat,$fitbit,$sdb);
     $calories_goal = $fitbit->Attribute[1]->Value;
@@ -52,6 +51,9 @@ switch ($_GET['action'])
     {
       $lock_status = sdb_fridge_get_lock($sdb);
     }
+*/
+
+    $lock_status = sdb_fridge_get_lock($sdb);
 
     $arr = array('status' => 'lock' . $lock_status);
     echo json_encode($arr);
@@ -119,6 +121,8 @@ switch ($_GET['action'])
     break;
 
   default:
+
+    require_once 'fridge_fitbit.php';
 
     $sdb = new AmazonSDB();
     $items = sdb_fridge_get_items($sdb);
